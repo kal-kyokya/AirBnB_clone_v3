@@ -20,11 +20,15 @@ def get_stats():
     """Return the number of each objects by type."""
     obj_list = list(storage.all().values())
     report = {}
+    classes = []
 
     for obj in obj_list:
-        if obj.__class__.__name__ in report:
-            report[obj.__class__.__name__] += 1
+        if obj.__class__.__name__ in classes:
+            pass
         else:
-            report[obj.__class__.__name__] = 1
+            classes.append(obj.__class__.__name__)
+    for cls in classes:
+        count = storage.count(cls)
+        report[cls] = count
 
     return (jsonify(report))
