@@ -5,7 +5,7 @@
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
-from models.engine.db_storage import classes
+
 
 # Route definitions
 
@@ -20,7 +20,13 @@ def get_stats():
     """Return the number of each objects by type."""
     obj_list = list(storage.all().values())
     report = {}
+    classes = []
 
+    for obj in obj_list:
+        if obj.__class__.__name__ in classes:
+            pass
+        else:
+            classes.append(obj.__class__.__name__)
     for cls in classes:
         count = storage.count(cls)
         report[cls] = count
