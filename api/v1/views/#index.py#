@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+11;rgb:0000/0000/0000#!/usr/bin/python3
 """
 'index'
 """
@@ -6,6 +6,7 @@ from api.v1.views import app_views
 from flask import jsonify
 from models import storage
 from models.engine.db_storage import classes
+
 
 # Route definitions
 
@@ -23,6 +24,6 @@ def get_stats():
 
     for cls in classes:
         count = storage.count(cls)
-        report[cls] = count
+        report[cls.lower()] = count
 
     return (jsonify(report))

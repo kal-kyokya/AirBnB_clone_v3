@@ -7,6 +7,7 @@ from flask import jsonify
 from models import storage
 from models.engine.db_storage import classes
 
+
 # Route definitions
 
 @app_views.route("/status")
@@ -18,7 +19,6 @@ def get_status():
 @app_views.route("/stats")
 def get_stats():
     """Return the number of each objects by type."""
-    obj_list = list(storage.all().values())
     report = {}
 
     for cls in classes:
