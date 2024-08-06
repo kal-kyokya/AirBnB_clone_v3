@@ -27,9 +27,14 @@ def get_status():
     return jsonify({"status": "OK"})
 
 
+@app.errorhandler(404)
+def not_found(error):
+    """Handles pages not found"""
+    return jsonify({"error": "Not found"})
+
 @app.teardown_appcontext
-def teardown_appcontext(Exception):
-    """End the session"""
+def teardown_db(Exception):
+    """Closes the storage on teardown."""
     storage.close()
 
 
