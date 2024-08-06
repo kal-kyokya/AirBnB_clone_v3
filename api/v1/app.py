@@ -30,7 +30,7 @@ def get_status():
 @app.errorhandler(404)
 def not_found(error):
     """Handles pages not found"""
-    return jsonify({"error": "Not found"})
+    return jsonify({"error": "Not found"}), 404
 
 
 @app.teardown_appcontext
