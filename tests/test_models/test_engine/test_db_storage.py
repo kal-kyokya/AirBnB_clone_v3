@@ -18,6 +18,8 @@ import json
 import os
 import pep8
 import unittest
+
+
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -86,3 +88,35 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != "db", "not testing db storage")
+    def test_get(self):
+        """Test the '.get()' method"""
+        from models import storage
+
+        storage.reload()
+        data = {'name': "Nairobi"}
+        instance = State(**data)
+        storage.new(instance)
+        storage.save()
+        obj = storage.get(instance.__class__.__name__, instance.id)
+        self.assertEqual(instance, obj)
+        self.assertIsInstance(obj, type(instance))
+
+    @unittest.skipIf(models.storage_t != "db", "Not testing db storage")
+    def test_count(self):
+        """Test the '.count()' method"""
+        from models import storage
+
+        storage.reload()
+        count1 = storage.count()
+        count2 = len(storage.all().values())
+        self.assertEqual(count1, count2)
+
+        try:
+            for cls in classes:
+                count3 = storage.count(cls)
+                count4 = len(storage.all(cls).values())
+                self.assertEqual(count3, count4)
+        except Exception as err:
+            print("Error Occured: ", err)

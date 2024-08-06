@@ -112,7 +112,7 @@ class DBStorage:
         if cls is None:
             objs_list = self.all().values()
             return (len(objs_list))
-        count = 0;
+        count = 0
         for obj in self.all().keys():
             class_name = obj.split('.')[0]
             if class_name == cls:
