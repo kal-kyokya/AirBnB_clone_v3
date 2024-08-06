@@ -12,8 +12,9 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
-classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+classes = {"Amenity": Amenity, "BaseModel": BaseModel,
+           "City": City, "Place": Place, "Review": Review,
+           "State": State, "User": User}
 
 
 class FileStorage:
@@ -68,3 +69,46 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """Retrieves an object based on its classname and ID.
+
+        Args:
+            cls: String, name of the class to which object belongs.
+            id: Integer, Unique Identifier of the object
+
+        Return:
+            The actual Object or None, if not found.
+        """
+        try:
+            if cls is None or id is None or not isinstance(id, str):
+                print("Usage: obj.get(<className>, <ID>)")
+            else:
+                for clss in classes:
+                    if cls == clss or cls == classes[clss]:
+                        objs_dict = self.all(cls)
+                        for obj in objs_dict.values():
+                            if id == obj.id:
+                                return (obj)
+                        return (None)
+        except Exception:
+            print("Error occured during 'get()' call.")
+
+    def count(self, cls=None):
+        """Computes the number of Objects in storage.
+
+        Arg:
+            cls: Optional, specify the className filter.
+
+        Return:
+            The number of objects found in storage.
+        """
+        if cls is None:
+            objs_list = self.all().values()
+            return (len(objs_list))
+        count = 0;
+        for obj in self.all().keys():
+            class_name = obj.split('.')[0]
+            if class_name == cls:
+                count += 1
+        return (count)
