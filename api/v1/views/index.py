@@ -23,6 +23,6 @@ def get_stats():
 
     for cls in classes:
         count = storage.count(cls)
-        report[cls] = count
+        report[cls.lower()] = count
 
     return (jsonify(report))
