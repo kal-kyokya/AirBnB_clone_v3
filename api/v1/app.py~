@@ -1,0 +1,22 @@
+#!/usr/bin/python3
+"""
+'app.py' is a Flask Web app
+"""
+from flask import Flask, jsonify
+from os import getenv
+
+
+# Specify current file as Flas Web app
+app = Flask(__name__)
+
+# Route definitions
+@app.route("/status", strict_slashes=False)
+def get_status():
+    """Return the status of the Web App"""
+    return jsonify({"status": "OK"})
+
+
+if __name__ == "__main__":
+    HOST = getenv(HBNB_API_HOST)
+    PORT = getenv(HBNB_API_PORT)
+    app.run(host=HOST, port=PORT)
