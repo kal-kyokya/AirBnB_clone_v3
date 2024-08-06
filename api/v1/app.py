@@ -32,6 +32,7 @@ def not_found(error):
     """Handles pages not found"""
     return jsonify({"error": "Not found"})
 
+
 @app.teardown_appcontext
 def teardown_db(Exception):
     """Closes the storage on teardown."""
