@@ -5,7 +5,11 @@
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
-from models.engine.db_storage import classes
+
+
+classes = {"amenities": amenities, "basemodels": basemodels,
+           "cities": cities, "places": places, "reviews": reviews,
+           "states": states, "users": users}
 
 
 # Route definitions
@@ -23,6 +27,6 @@ def get_stats():
 
     for cls in classes:
         count = storage.count(cls)
-        report[cls.lower()] = count
+        report[cls] = count
 
     return (jsonify(report))
