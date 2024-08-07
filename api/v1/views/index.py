@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-'index' defines app_views' routes
+'index.py' contains route defintions for the app_views blueprint.
 """
 from api.v1.views import app_views
 from flask import jsonify
