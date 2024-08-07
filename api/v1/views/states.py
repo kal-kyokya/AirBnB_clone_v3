@@ -57,15 +57,15 @@ def update_state(state_id):
     """Updates a State instance based on its ID"""
     if state_id:
         data = request.get_json()
-        ignore_keys = ["id", "create_at", "updated_at"]
+        to_ignore = ["id", "create_at", "updated_at"]
         state = storage.get("State", state_id)
 
-        if request.content_type != "application/json" or not data:
-            return (abort(400, "Not a JSON"))
+        if type(data) != dict or not data:
+            return (jsonify({"error": "Not a JSON"}), 400)
 
         if state:
             for key, value in data.items():
-                if key not in ignore_keys:
+                if key not in to_ignore:
                     setattr(state, key, value)
 
             state.save()
