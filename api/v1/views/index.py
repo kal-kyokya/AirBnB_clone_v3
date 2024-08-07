@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""index file, main view file
+"""
+'index.py' is the index file; main view file
 """
 from api.v1.views import app_views
 from flask import jsonify
