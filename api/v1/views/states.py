@@ -30,9 +30,10 @@ def delete_state(state_id):
     """Deletes a State instance based on its ID."""
     if state_id:
         state = storage.get("State", state_id)
-        storage.delete(state)
-        storage.save()
-        return (jsonify({}), 200)
+        if state:
+            storage.delete(state)
+            storage.save()
+            return (jsonify({}), 200)
     return (abort(404))
 
 
@@ -47,8 +48,7 @@ def create_state():
         return (abort(400, "Missing name"))
 
     state = State(**data)
-    storage.new(state)
-    storage.save()
+    state.save()
     return (jsonify(state.to_dict()), 201)
 
 
@@ -60,13 +60,14 @@ def update_state(state_id):
         ignore_keys = ["id", "create_at", "updated_at"]
         state = storage.get("State", state_id)
 
-        if request.content_type != "application/json":
+        if request.content_type != "application/json" or not data:
             return (abort(400, "Not a JSON"))
 
-        for key, value in data.items():
-            if key not in ignore_keys:
-                setattr(state, key, value)
+        if state:
+            for key, value in data.items():
+                if key not in ignore_keys:
+                    setattr(state, key, value)
 
-        storage.save()
-        return (jsonify(state.to_dict()), 200)
+            state.save()
+            return (jsonify(state.to_dict()), 200)
     return (abort(404))
