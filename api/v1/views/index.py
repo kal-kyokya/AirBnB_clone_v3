@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-'index'
+'index' defines app_views' routes
 """
 from api.v1.views import app_views
 from flask import jsonify
