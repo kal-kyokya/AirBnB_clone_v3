@@ -7,11 +7,6 @@ from flask import jsonify
 from models import storage
 
 
-classes = {"amenities": amenities, "basemodels": basemodels,
-           "cities": cities, "places": places, "reviews": reviews,
-           "states": states, "users": users}
-
-
 # Route definitions
 
 @app_views.route("/status")
@@ -23,10 +18,11 @@ def get_status():
 @app_views.route("/stats")
 def get_stats():
     """Return the number of each objects by type."""
-    report = {}
-
-    for cls in classes:
-        count = storage.count(cls)
-        report[cls] = count
+     report = {"amenities": storage.count(amenities),
+               "cities": storage.count(cities),
+               "places": storage.count(places),
+               "reviews": storage.count(reviews),
+               "states": storage.count(states),
+               "users": storage.count(users)}
 
     return (jsonify(report))
