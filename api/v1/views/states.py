@@ -19,7 +19,7 @@ def states_get(state_id=None):
 
     # GET REQUESTS
     if request.method == 'GET':
-        if not state_id:  # if no, state id specified, return all
+        if not state_id:  # if no state id specified, return all
             return jsonify([obj.to_dict() for obj in states.values()])
 
         key = 'State.' + state_id
