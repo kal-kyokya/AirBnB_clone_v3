@@ -42,7 +42,7 @@ def create_state():
     """Creates a State instance"""
     data = request.get_json()
 
-    if request.content_type != "application/json":
+    if request.content_type != "application/json" or not data:
         return (abort(400), "Not a JSON")
     if "name" not in data:
         return (abort(400, "Missing name"))
