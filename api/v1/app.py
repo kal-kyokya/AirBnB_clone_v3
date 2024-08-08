@@ -21,7 +21,11 @@ app.register_blueprint(app_views)
 
 # Enables Cross-Origin Resource Sharing on Flask app
 
-CORS(app)
+CORS(app, resources={
+    r"/*": {
+        "origins": {"0.0.0.0"}
+    }
+})
 
 
 # Route definitions
