@@ -23,6 +23,7 @@ app.register_blueprint(app_views)
 
 CORS(app)
 
+
 # Route definitions
 
 @app.route("/status", strict_slashes=False)
