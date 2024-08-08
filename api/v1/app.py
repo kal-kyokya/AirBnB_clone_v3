@@ -14,6 +14,7 @@ from os import getenv
 # Specify current file as Flas Web app
 
 app = Flask(__name__)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 # register the 'Blueprint' to the Web App
 
